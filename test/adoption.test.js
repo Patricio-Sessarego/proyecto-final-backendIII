@@ -24,7 +24,7 @@ describe("TESTING DE LA RUTA /api/adoptions" , () => {
             }
         })
 
-        it("ME RETORNA 404 SI LA RUTA NO EXISTE" , async () => {
+        it("DEBE RETORNAR 404 SI LA RUTA NO EXISTE" , async () => {
             try{
                 const { status } = await requester.get('/adoptions/noexiste')
 
