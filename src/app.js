@@ -1,3 +1,5 @@
+import swaggerUiExpress from 'swagger-ui-express'
+import swaggerJSDoc from 'swagger-jsdoc'
 import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose'
 import express from 'express'
@@ -26,3 +28,20 @@ app.use('/api/pets',petsRouter)
 
 //LISTEN
 app.listen(PORT , () => console.log(`ESUCHANDO EN PUERTO ${PORT}`))
+
+//CONFIGURACION DE SWAGGER
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.1",
+
+        info: {
+            title: "Documentacion de la App Adoptme",
+            description: "App dedicada a encontrar familias para los animales."
+        }
+    },
+    apis: ["./src/docs/**/*.yaml"]
+}
+
+//CONECTAMOS SWAGGER CON EXPRESS
+const specs = swaggerJSDoc(swaggerOptions)
+app.use('/apidocs' , swaggerUiExpress.serve , swaggerUiExpress.setup(specs))

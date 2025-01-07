@@ -23,13 +23,26 @@ const updateUser = async(req,res)=>{
 
 const deleteUser = async(req,res) =>{
     const userId = req.params.uid;
-    const result = await usersService.getUserById(userId);
+    const result = await usersService.deleteById(userId);
     res.send({status:"success",message:"User deleted"})
+}
+
+//AGREGAMOS EL POST PARA SWAGGER
+const createUser = async(req , res) => {
+    try{
+        const newUser = req.body
+        await usersService.create(newUser)
+        res.status(200).send({ status: 'success' , message: 'USUARIO CREADO CORRECTAMENTE' })
+    }catch(error){
+        console.error(error)
+        res.status(500).send({ status: 'error' , message: 'ERROR AL CREAR EL USUARIo' })
+    }
 }
 
 export default {
     deleteUser,
     getAllUsers,
     getUser,
-    updateUser
+    updateUser,
+    createUser
 }

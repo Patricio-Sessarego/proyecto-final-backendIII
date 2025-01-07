@@ -70,7 +70,7 @@ describe("TESTING DE LA RUTA /api/adoptions" , () => {
         it("DEBE CREAR CORRECTAMENTE UNA ADOPCION" , async () => {
             try{
                 const uid = "6770070095f5a41deeb267f5"
-                const pid = "6770070095f5a41deeb267fd"
+                const pid = "6770070095f5a41deeb267ff"
 
                 const { status , _body } = await requester.post(`/api/adoptions/${uid}/${pid}`)
 

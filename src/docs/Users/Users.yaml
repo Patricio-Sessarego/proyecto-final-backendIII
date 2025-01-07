@@ -1,0 +1,168 @@
+paths:
+  /api/users:
+    get:
+      summary: Obtenemos todos los Usuarios de la Base de Datos.
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Obtiene todos los Usuarios correctamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/User"
+        "500": 
+          description: Error interno del Servidor.
+
+    post:
+      summary: Creamos un Usuario a partir de los datos recibidos del body.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/createUser"
+      responses:
+        "200":
+          description: El Usuario se creo correctamente.
+        "500":
+          description: Error interno del Servidor.
+  /api/users/{uid}:
+    get:
+      summary: Obtiene un unico Usuario por Id
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Id del Usuario que desea buscar
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Usuario encontrado correctamente
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#components/schemas/User"
+        "500":
+          description: Error al intentar buscasr el Usuario
+    put:
+      summary: Actualiza el Usuario indicado por el Id
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Id del Usuario que desea actualizar
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: "#components/requestBodies/updateUser"
+            example:
+              first_name: Lionel
+              last_name: Messi
+              password: M10
+              email: m10@gmail.com
+      responses:
+        "200":
+          description: Usuario actualizado correctamente
+        "500":
+          description: Error al intentar actualizar el Usuario
+    delete:
+      summary: Elimina el Usuario indicado por el Id
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Id del Usuario que desea eliminar
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Usuario eliminado correctamente
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error al intentar eliminar el Usuario
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por Mongo
+        first_name:
+          type: string
+          description: Nombre del Usuario
+        last_name:
+          type: string
+          description: Apellido del Usuario
+        password: 
+          type: string
+          description: Password del Usuario
+      example:
+            _id: ObjectId("6748a49e5b08e33dcc5d4f7f")
+            first_name: Patricio
+            last_name: Sessarego
+            password: Ruri2005
+  requestBodies:
+    createUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del Usuario
+        last_name:
+          type: string
+          description: Apellido del Usuario
+        password:
+          type: string
+          description: Password del Usuario
+        email:
+          type: string
+          description: Email del Usuario
+      example:
+          first_name: Lionel
+          last_name: Messi
+          password: M10
+          email: m10@gmail.com
+    updateUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del Usuario
+        last_name:
+          type: string
+          description: Apellido del Usuario
+        password:
+          type: string
+          description: Password del Usuario
+        email:
+          type: string
+          description: Email del Usuario
+      example:
+          first_name: Lionel
+          last_name: Messi
+          password: M10
+          email: m10@gmail.com

@@ -9,5 +9,7 @@ router.get('/:uid',usersController.getUser);
 router.put('/:uid',usersController.updateUser);
 router.delete('/:uid',usersController.deleteUser);
 
+//AGREGAMOS EL POST PARA EL SWAGGER
+router.post('/' , usersController.createUser)
 
 export default router;
